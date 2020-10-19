@@ -14,6 +14,7 @@ let isScrolling = false;
 let timer;
 let scrollDirection = 'down';
 let scrollDelta = 0;
+let delta = 0;
 
 const app = new PIXI.Application({
   view: canvas,
@@ -50,49 +51,84 @@ container.addChild(sprite1);
 
 sprite2 = new PIXI.Sprite(texture2);
 sprite2.y = 100;
-sprite2.x = 100;
+sprite2.x = 0;
+// this does the same as above
+sprite2.position.set(100,100);
+sprite2.tint = 0xff0000;
+
+
 container.addChild(sprite2);
 
+////// SCROLLING SPRITE
 sprite3 = new PIXI.Sprite(texture2);
 sprite3.y = 100;
 sprite3.x = 200;
+sprite3.position.set(app.renderer.screen.width / 2, app.renderer.screen.height / 2);
 sprite3.anchor.set(0.5);
+// sprite3.pivot.set(50, 50);
 container.addChild(sprite3);
 
 app.ticker.add(animate);
 app.ticker.autoStart = false;
 app.ticker.stop();
+
+// BG
 img.x = app.renderer.screen.width / 2;
 img.y = app.renderer.screen.height / 2;
-sprite3.x = app.renderer.screen.width / 2;
-sprite3.y = app.renderer.screen.height / 2;
 
-let delta = 0;
+
+// many sprites
+let sprites = [];
+for (let i = 0; i < 10; i++) {
+  let sprite = new PIXI.Sprite(texture2);
+  sprite.x = Math.random() * app.renderer.screen.width;
+  sprite.y = Math.random() * app.renderer.screen.height;
+  sprite.anchor.set(0.5);
+  sprite.tint = Math.random() * 0xffffff;
+  container.addChild(sprite);
+  sprites.push(sprite);
+
+}
+
 function animate() {
+
+
+
+
+
   img.x = app.renderer.screen.width / 2;
   img.y = app.renderer.screen.height / 2;
 
+  delta += 0.1;
+
+
+
+  sprite1.y = 100 + Math.sin(delta) * 10;
+  sprite2.x = Math.sin(delta) * 10;
+  sprite1.alpha = Math.sin(delta);
+
+  // hide the sprite
+  // sprite1.visible = false;
+
+  // BUTTON INTERACTION
+  // sprite1.interactive = true;
+  // sprite1.buttonMode = true;
+
+  // mask, sprites must overlap
+  // sprite1.mask = sprite2;
+
+  // Scale on scroll
   sprite3.x = app.renderer.screen.width / 2;
   sprite3.y = app.renderer.screen.height / 2;
+  // sprite3.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+  const currentX = sprite3.scale.scope.scale._x;
+  const currentY = sprite3.scale.scope.scale._y;
+  sprite3.scale = new PIXI.Point(currentX + scrollDelta, currentY + scrollDelta);
 
-  // if (isScrolling) {
-    delta += 0.0002;
-    sprite1.y = 100 + Math.sin(delta) * 10;
-    sprite2.x = 100 + Math.sin(delta) * 10;
 
-    const currentX = sprite3.scale.scope.scale._x;
-    const currentY = sprite3.scale.scope.scale._y;
 
-    // if(scrollDirection === 'down') {
-      sprite3.scale = new PIXI.Point(currentX + scrollDelta, currentY + scrollDelta);
-      // console.log("animate -> sprite3.scale", currentX)
-    // } else {
-    //   sprite3.scale = new PIXI.Point(currentX - scrollDelta, currentY - scrollDelta);
-    // }
-
-    // container.x = Math.sin(delta) * 10;
-    // container.scale = delta + 10;
-  // }
+  // container.x = Math.sin(delta) * 10;
+  // container.scale = delta + 10;
   // img.rotation += 0.1;
 }
 
@@ -102,15 +138,8 @@ canvas.addEventListener(
     clearTimeout(timer);
     // console.log("e", e)
 
-    console.log("e.deltaY", e.deltaY)
-    console.log("MULTIPLIER", e.deltaY * 0.0008)
+    // scroll MULTIPLIER
     scrollDelta = e.deltaY * 0.0008;
-
-    if(Math.sign(e.deltaY) === 1 ) {
-      scrollDirection = 'down';
-    } else {
-      scrollDirection = 'up';
-    }
 
     isScrolling = true;
     app.ticker.start();
