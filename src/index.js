@@ -79,33 +79,53 @@ img.y = app.renderer.screen.height / 2;
 
 // many sprites
 let sprites = [];
-for (let i = 0; i < 10; i++) {
-  let sprite = new PIXI.Sprite(texture2);
-  sprite.x = Math.random() * app.renderer.screen.width;
-  sprite.y = Math.random() * app.renderer.screen.height;
-  sprite.anchor.set(0.5);
-  sprite.tint = Math.random() * 0xffffff;
-  container.addChild(sprite);
-  sprites.push(sprite);
 
+addSprites();
+function addSprites() {
+  for (let i = 0; i < 10; i++) {
+    let sprite = new PIXI.Sprite(texture2);
+    sprite.x = Math.random() * app.renderer.screen.width;
+    sprite.y = Math.random() * app.renderer.screen.height;
+    sprite.anchor.set(0.5);
+    sprite.tint = Math.random() * 0xffffff;
+    container.addChild(sprite);
+    sprites.push(sprite);
+  }
 }
 
 function animate() {
 
 
-
+  for (let i = 0; i < sprites.length; i++) {
+    sprites[i].rotation += 0.1;
+  }
 
 
   img.x = app.renderer.screen.width / 2;
   img.y = app.renderer.screen.height / 2;
 
   delta += 0.1;
+  // container.y = Math.sin(delta) * 10;
 
+  // Scale CONTAINER on scroll
 
+  // container.position.set(app.renderer.screen.width / 2,app.renderer.screen.height / 2);
+  // container.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+  container.x = app.renderer.screen.width / 2;
+  container.y = app.renderer.screen.height / 2;
+  container.pivot.set(app.renderer.screen.width / 2, app.renderer.screen.height / 2);
+  const currentX = container.scale.scope.scale._x;
+  const currentY = container.scale.scope.scale._y;
+  container.scale = new PIXI.Point(currentX + scrollDelta, currentY + scrollDelta);
 
-  sprite1.y = 100 + Math.sin(delta) * 10;
-  sprite2.x = Math.sin(delta) * 10;
-  sprite1.alpha = Math.sin(delta);
+  // oscilate up and down
+  // sprite1.y = 100 + Math.sin(delta) * 10;
+
+  // oscilate left and right
+  // sprite2.x = Math.sin(delta) * 10;
+
+  // Animate the opacity
+  // sprite1.alpha = Math.sin(delta);
 
   // hide the sprite
   // sprite1.visible = false;
@@ -117,13 +137,13 @@ function animate() {
   // mask, sprites must overlap
   // sprite1.mask = sprite2;
 
-  // Scale on scroll
-  sprite3.x = app.renderer.screen.width / 2;
-  sprite3.y = app.renderer.screen.height / 2;
-  // sprite3.blendMode = PIXI.BLEND_MODES.MULTIPLY;
-  const currentX = sprite3.scale.scope.scale._x;
-  const currentY = sprite3.scale.scope.scale._y;
-  sprite3.scale = new PIXI.Point(currentX + scrollDelta, currentY + scrollDelta);
+  // // Scale on scroll
+  // sprite3.x = app.renderer.screen.width / 2;
+  // sprite3.y = app.renderer.screen.height / 2;
+  // // sprite3.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+  // const currentX = sprite3.scale.scope.scale._x;
+  // const currentY = sprite3.scale.scope.scale._y;
+  // sprite3.scale = new PIXI.Point(currentX + scrollDelta, currentY + scrollDelta);
 
 
 
