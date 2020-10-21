@@ -9,9 +9,13 @@ import bunny from '../assets/bunny.png';
 import guy from '../assets/sprite.png';
 import bg from '../assets/sprite2.png';
 
+
+import clouds1 from '../assets/clouds-large.png';
 import girls from '../assets/Scene_SelfieGirls.png';
 
 const reducer = (_, { data }) => data;
+
+window.PIXI = PIXI;
 
 const state = {
   sections: 3,
@@ -20,29 +24,23 @@ const state = {
   top: createRef()
 };
 
-// export const App = () => (
-//   <Stage>
-//     <Sprite image={bunny} x={100} y={100} />
-//   </Stage>
-// );
-
-const Girls = ({ w, h }) => {
-  // const [motion, update] = useReducer(reducer)
-  // const iter = useRef(0)
-  // const texture = PIXI.Texture.from(girls);
-  // console.log('Girls -> texture', texture.width);
-  // console.log('Girls -> texture', texture.height);
+const ScrollScene = ({ w, h }) => {
+  const scrollSceneRef = useRef(null);
+  const girlSpriteRef = useRef(null);
+  const cloud1SpriteRef = useRef(null);
+  const cloud2SpriteRef = useRef(null);
+  const cloud3SpriteRef = useRef(null);
+  const cloud4SpriteRef = useRef(null);
 
   const [motion, update] = useReducer(reducer);
   const iter = useRef(0);
 
-  const girlSpriteRef = useRef(null);
-
+  // scroll animation
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     setTimeout(() => {
-      gsap.to(girlSpriteRef.current.scale, {
+      gsap.to(scrollSceneRef.current.scale, {
         scrollTrigger: {
           // trigger: listRef.current,
           // start: 'top 100%',
@@ -58,34 +56,56 @@ const Girls = ({ w, h }) => {
     }, 1500);
   }, []);
 
+  // cloud animation
   useTick((delta) => {
-    // const i = iter.current += 0.0001
-    const i = 0;
+    const i = iter.current += 0.1
+    // const i = 0;
 
-    const sprite = girlSpriteRef.current;
-    const currentX = sprite.scale.scope.scale._x;
-    const currentY = sprite.scale.scope.scale._y;
+    const sprite = cloud1SpriteRef.current;
+    // console.log("ScrollScene -> sprite", sprite)
+    const currentX = sprite.transform.position._x;
+    const currentY = sprite.transform.position._y;
+
+    let animationSpeed = 0.9;
+
+    // off the screen to the right
+    if(currentX > w/2) {
+      animationSpeed = currentX * -1;
+    }
+    // console.log("ScrollScene -> w", w)
+    // console.log("ScrollScene -> currentX", currentX);
+    // console.log("ScrollScene -> currentX + sprite.width/2", currentX + sprite.width/2)
+
+    // console.log("ScrollScene -> currentX - sprite.width/2 ", currentX - sprite.width/2 )
+    // console.log("ScrollScene -> sprite.width", sprite.width)
+    // console.log("ScrollScene -> w/2", w/2)
+    // console.log("ScrollScene -> animationSpeed", animationSpeed)
+
+    const xTest = currentX - sprite.width/2;
 
     update({
       type: 'update',
       data: {
-        // x: Math.sin(i) * 100,
+        x: xTest > w/2 && Math.sign(xTest) ? -4000 : currentX + animationSpeed
+        // x: Math.sin(i) * 10, // oscilate
         // y: Math.sin(i / 1.5) * 100,
         // rotation: Math.sin(i) * Math.PI,
         // anchor: Math.sin(i / 2),
-        scale: new PIXI.Point(currentX + i, currentY + i)
+        // scale: new PIXI.Point(currentX + i, currentY + i)
       }
     });
   });
+
   return (
-    <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} x={w / 2} y={h / 2} {...motion} />
+    <Container ref={scrollSceneRef} x={w / 2} y={h / 2}>
+      <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} />
+      <Sprite ref={cloud1SpriteRef} image={clouds1} x={-800} y={-500} anchor={0.5} scale={{x: 1, y: 1}} {...motion} />
+      {/* <Sprite ref={cloud2SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.1, y: 0.1}} anchor={0.5} {...motion} />
+      <Sprite ref={cloud3SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.6, y: 0.6}} anchor={0.5} {...motion} />
+      <Sprite ref={cloud4SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.6, y: 0.6}} anchor={0.5} {...motion} /> */}
+    </Container>
   );
 };
-
-
-
-
-
 
 const getSize = () => ({
   width: window.innerWidth,
@@ -123,7 +143,7 @@ export const App = () => {
           transparent: false
         }}
       >
-        <Size>{({ width, height }) => <Girls w={width} h={height} />}</Size>
+        <Size>{({ width, height }) => <ScrollScene w={width} h={height} />}</Size>
       </Stage>
       <div ref={scrollArea} onScroll={onScroll}>
         <div style={{ height: `${state.pages * 100}vh` }} />
