@@ -5,16 +5,47 @@ import { ScrollTrigger } from 'gsap/all';
 
 import * as PIXI from 'pixi.js';
 
-import bunny from '../assets/bunny.png';
-import guy from '../assets/sprite.png';
-import bg from '../assets/sprite2.png';
-
-
+import maskTest from '../assets/masktest.svg';
+import bg from '../assets/scene-1-bg.jpg';
 import clouds1 from '../assets/clouds-large.png';
 import girls from '../assets/Scene_SelfieGirls.png';
 
+// The reducer
 const reducer = (_, { data }) => data;
 
+const sceneState = {
+  clouds: [
+    {
+      x: -950,
+      y: -950,
+      scale: { x: 1, y: 1 },
+      zIndex: 3,
+      spriteImage: clouds1,
+      anchor: 0.5,
+      animationDirection: 'LTR'
+    },
+    {
+      x: 150,
+      y: 350,
+      scale: { x: 0.5, y: 0.5 },
+      zIndex: 3,
+      spriteImage: clouds1,
+      anchor: 0.5,
+      animationDirection: 'RTL'
+    },
+    {
+      x: -450,
+      y: -550,
+      scale: { x: 0.8, y: 0.8 },
+      zIndex: 3,
+      spriteImage: clouds1,
+      anchor: 0.5,
+      animationDirection: 'LTR'
+    }
+  ]
+};
+
+// PIXI must be exposed for PIXI devtools to work
 window.PIXI = PIXI;
 
 const state = {
@@ -27,6 +58,10 @@ const state = {
 const ScrollScene = ({ w, h }) => {
   const scrollSceneRef = useRef(null);
   const girlSpriteRef = useRef(null);
+  const maskRef = useRef(null);
+  const bgRef = useRef(null);
+
+  const cloudRefs = useRef([]);
   const cloud1SpriteRef = useRef(null);
   const cloud2SpriteRef = useRef(null);
   const cloud3SpriteRef = useRef(null);
@@ -37,6 +72,10 @@ const ScrollScene = ({ w, h }) => {
 
   // scroll animation
   useEffect(() => {
+    // cloud1SpriteRef.current.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+
+    // girlSpriteRef.current.mask = bgRef.current;
+
     gsap.registerPlugin(ScrollTrigger);
 
     setTimeout(() => {
@@ -58,48 +97,83 @@ const ScrollScene = ({ w, h }) => {
 
   // cloud animation
   useTick((delta) => {
-    const i = iter.current += 0.1
+    const i = (iter.current += 0.1);
     // const i = 0;
 
-    const sprite = cloud1SpriteRef.current;
-    // console.log("ScrollScene -> sprite", sprite)
-    const currentX = sprite.transform.position._x;
-    const currentY = sprite.transform.position._y;
+    // const sprite = cloud1SpriteRef.current;
+    // // console.log("ScrollScene -> sprite", sprite)
+    // const currentX = sprite.transform.position._x;
+    // const currentY = sprite.transform.position._y;
 
-    let animationSpeed = 0.9;
+    let newSceneState = sceneState;
 
-    // off the screen to the right
-    if(currentX > w/2) {
-      animationSpeed = currentX * -1;
+
+
+
+    // console.log("ScrollScene -> sceneState", sceneState)
+    // console.log("ScrollScene -> cloudRefs", cloudRefs)
+    // console.log("ScrollScene -> cloudRefs.length", cloudRefs.length)
+
+    if(cloudRefs && cloudRefs.current) {
+
+      cloudRefs.current.map((cloud, i) => {
+        let animationSpeed = 1 - cloud.scale.x + 0.1;
+
+        const sprite = cloud;
+        const currentX = sprite.transform.position._x;
+        const currentY = sprite.transform.position._y;
+
+        newSceneState.clouds[i] = {
+          ...sceneState.clouds[i],
+          x: currentX >= w / 2 ? -w / 2 - sprite.width : currentX + animationSpeed,
+        };
+      });
+
+      // console.log("ScrollScene -> newSceneState", newSceneState)
+
+      update({
+        type: 'update',
+        data: { ...newSceneState }
+      });
     }
-    // console.log("ScrollScene -> w", w)
-    // console.log("ScrollScene -> currentX", currentX);
-    // console.log("ScrollScene -> currentX + sprite.width/2", currentX + sprite.width/2)
 
-    // console.log("ScrollScene -> currentX - sprite.width/2 ", currentX - sprite.width/2 )
-    // console.log("ScrollScene -> sprite.width", sprite.width)
-    // console.log("ScrollScene -> w/2", w/2)
-    // console.log("ScrollScene -> animationSpeed", animationSpeed)
 
-    const xTest = currentX - sprite.width/2;
-
-    update({
-      type: 'update',
-      data: {
-        x: xTest > w/2 && Math.sign(xTest) ? -4000 : currentX + animationSpeed
-        // x: Math.sin(i) * 10, // oscilate
-        // y: Math.sin(i / 1.5) * 100,
-        // rotation: Math.sin(i) * Math.PI,
-        // anchor: Math.sin(i / 2),
-        // scale: new PIXI.Point(currentX + i, currentY + i)
-      }
-    });
+    // update({
+    //   type: 'update',
+    //   data: {
+    //     x: currentX >= w / 2 ? -w / 2 - sprite.width : currentX + animationSpeed
+    //     // x: currentX + animationSpeed
+    //     // x: Math.sin(i) * 10, // oscilate
+    //     // y: Math.sin(i / 1.5) * 100,
+    //     // rotation: Math.sin(i) * Math.PI,
+    //     // anchor: Math.sin(i / 2),
+    //     // scale: new PIXI.Point(currentX + i, currentY + i)
+    //   }
+    // });
   });
 
   return (
-    <Container ref={scrollSceneRef} x={w / 2} y={h / 2}>
-      <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} />
-      <Sprite ref={cloud1SpriteRef} image={clouds1} x={-800} y={-500} anchor={0.5} scale={{x: 1, y: 1}} {...motion} />
+    <Container position={[0, 0]} ref={scrollSceneRef} x={w / 2} y={h / 2} sortableChildren={true}>
+      <Sprite ref={bgRef} image={bg} x={0} y={0} scale={{ x: 1.5, y: 1.5 }} anchor={0.5} zIndex={0.1} />
+      <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} zIndex={0.5} />
+      {/* <Sprite ref={cloud1SpriteRef} image={clouds1} x={-950} y={-950} scale={{ x: 1, y: 1 }} zIndex={0.6} /> */}
+
+      {sceneState.clouds.map((cloud, i) => {
+        return (
+          <Sprite
+            key={i}
+            ref={(el) => (cloudRefs.current[i] = el)}
+            image={clouds1}
+            x={cloud.x}
+            y={cloud.y}
+            scale={cloud.scale}
+            zIndex={0.6}
+          />
+        );
+      })}
+
+      {/* <Sprite ref={maskRef} image={maskTest} x={0} y={0} scale={{ x: 5.5, y: 5.5 }} anchor={0.5} /> */}
+      {/* <Sprite bgRef={maskRef} image={maskTest} x={0} y={0} scale={{ x: 5.5, y: 5.5 }} anchor={0.5} /> */}
       {/* <Sprite ref={cloud2SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.1, y: 0.1}} anchor={0.5} {...motion} />
       <Sprite ref={cloud3SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.6, y: 0.6}} anchor={0.5} {...motion} />
       <Sprite ref={cloud4SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.6, y: 0.6}} anchor={0.5} {...motion} /> */}
@@ -137,10 +211,10 @@ export const App = () => {
       <Stage
         {...getSize()}
         options={{
-          backgroundColor: 0x000000,
+          backgroundColor: 0xff0000,
           resizeTo: window,
           autoDensity: true,
-          transparent: false
+          transparent: true
         }}
       >
         <Size>{({ width, height }) => <ScrollScene w={width} h={height} />}</Size>
