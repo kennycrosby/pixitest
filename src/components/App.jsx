@@ -42,7 +42,10 @@ const sceneState = {
       anchor: 0.5,
       animationDirection: 'LTR'
     }
-  ]
+  ],
+  girls: {
+    distance: 0
+  }
 };
 
 // PIXI must be exposed for PIXI devtools to work
@@ -91,14 +94,16 @@ const ScrollScene = ({ w, h }) => {
       });
 
       tl.to(scrollSceneRef.current.scale, {
-        x: 2,
-        y: 2,
+        x: 120,
+        y: 120,
+        duration: 1,
         ease: 'power2.in'
-      }).to(girlSpriteRef.current, {
-        x: 500,
-        y: 500,
-        ease: 'power2.in'
-      })
+      }, 'start').to(girlSpriteRef.current, {
+        x: 100,
+        y: 90,
+        duration: 1,
+        ease: 'power2.out'
+      }, '-=1')
     }, 1500);
   }, []);
 
@@ -113,10 +118,6 @@ const ScrollScene = ({ w, h }) => {
     // const currentY = sprite.transform.position._y;
 
     let newSceneState = sceneState;
-
-
-
-
     // console.log("ScrollScene -> sceneState", sceneState)
     // console.log("ScrollScene -> cloudRefs", cloudRefs)
     // console.log("ScrollScene -> cloudRefs.length", cloudRefs.length)
@@ -163,7 +164,7 @@ const ScrollScene = ({ w, h }) => {
     <Container position={[0, 0]} ref={scrollSceneRef} x={w / 2} y={h / 2} sortableChildren={true}>
       {/* <Sprite ref={maskRef} image={maskTest} x={0} y={0} scale={{ x: 5.5, y: 5.5 }} anchor={0.5} /> */}
       {/* <Sprite ref={bgRef} image={bg} x={0} y={0} scale={{ x: 1.5, y: 1.5 }} anchor={0.5} zIndex={0.1} /> */}
-      <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} zIndex={0.5} />
+      <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} zIndex={5} />
       {/* <Sprite ref={cloud1SpriteRef} image={clouds1} x={-950} y={-950} scale={{ x: 1, y: 1 }} zIndex={0.6} /> */}
 
       {sceneState.clouds.map((cloud, i) => {
@@ -175,7 +176,8 @@ const ScrollScene = ({ w, h }) => {
             x={cloud.x}
             y={cloud.y}
             scale={cloud.scale}
-            zIndex={0.6}
+            zIndex={6}
+            anchor={0}
           />
         );
       })}
