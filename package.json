@@ -8,7 +8,11 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "pixi.js": "5.3.3"
+    "@inlet/react-pixi": "^5.2.0",
+    "pixi.js": "5.3.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "gsap": "file:external/gsap-bonus.tgz"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
