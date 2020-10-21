@@ -79,7 +79,7 @@ const ScrollScene = ({ w, h }) => {
     gsap.registerPlugin(ScrollTrigger);
 
     setTimeout(() => {
-      gsap.to(scrollSceneRef.current.scale, {
+      const tl = gsap.timeline({
         scrollTrigger: {
           // trigger: listRef.current,
           // start: 'top 100%',
@@ -87,11 +87,18 @@ const ScrollScene = ({ w, h }) => {
           toggleActions: 'play none none reset', // onEnter, onLeave, onEnterBack, onLeaveBack
           // Options: "play", "pause", "resume", "reset", "restart", "complete", "reverse", and "none".
           scrub: true
-        },
-        x: 6,
-        y: 6,
-        ease: 'power2.in'
+        }
       });
+
+      tl.to(scrollSceneRef.current.scale, {
+        x: 2,
+        y: 2,
+        ease: 'power2.in'
+      }).to(girlSpriteRef.current, {
+        x: 500,
+        y: 500,
+        ease: 'power2.in'
+      })
     }, 1500);
   }, []);
 
@@ -154,7 +161,8 @@ const ScrollScene = ({ w, h }) => {
 
   return (
     <Container position={[0, 0]} ref={scrollSceneRef} x={w / 2} y={h / 2} sortableChildren={true}>
-      <Sprite ref={bgRef} image={bg} x={0} y={0} scale={{ x: 1.5, y: 1.5 }} anchor={0.5} zIndex={0.1} />
+      {/* <Sprite ref={maskRef} image={maskTest} x={0} y={0} scale={{ x: 5.5, y: 5.5 }} anchor={0.5} /> */}
+      {/* <Sprite ref={bgRef} image={bg} x={0} y={0} scale={{ x: 1.5, y: 1.5 }} anchor={0.5} zIndex={0.1} /> */}
       <Sprite ref={girlSpriteRef} image={girls} scale={{ x: 0.5, y: 0.5 }} anchor={0.5} zIndex={0.5} />
       {/* <Sprite ref={cloud1SpriteRef} image={clouds1} x={-950} y={-950} scale={{ x: 1, y: 1 }} zIndex={0.6} /> */}
 
@@ -172,7 +180,7 @@ const ScrollScene = ({ w, h }) => {
         );
       })}
 
-      {/* <Sprite ref={maskRef} image={maskTest} x={0} y={0} scale={{ x: 5.5, y: 5.5 }} anchor={0.5} /> */}
+
       {/* <Sprite bgRef={maskRef} image={maskTest} x={0} y={0} scale={{ x: 5.5, y: 5.5 }} anchor={0.5} /> */}
       {/* <Sprite ref={cloud2SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.1, y: 0.1}} anchor={0.5} {...motion} />
       <Sprite ref={cloud3SpriteRef} image={clouds1} x={-800} y={-500} scale={{x: 0.6, y: 0.6}} anchor={0.5} {...motion} />
