@@ -10,12 +10,17 @@ import mask from '../assets/mask.png';
 
 import tbg from '../assets/tbg.png';
 // import tgirls from '../assets/tgirls.png';
-import tgirls from '../assets/scene_selfiegirls.webp';
+import threeGirlsFile from '../assets/Scene_3Girls.webp';
 import tmask from '../assets/tmask.png';
+import invertedMask from '../assets/invertedMask.webp';
+
+
+
+import phoneMask from '../assets/selfieGirlsPhoneMask.webp';
 
 import bg from '../assets/scene-1-bg.jpg';
 import clouds1 from '../assets/clouds-large.png';
-import girls from '../assets/Scene_SelfieGirls.png';
+import selfieGirls from '../assets/Scene_SelfieGirls.png';
 
 // The reducer
 const reducer = (_, { data }) => data;
@@ -68,7 +73,9 @@ const state = {
 const ScrollScene = ({ w, h }) => {
   const mainScrollSceneRef = useRef(null);
   const subSceneRef = useRef(null);
-  const girlSpriteRef = useRef(null);
+  const subScene2Ref = useRef(null);
+  const selfieGirlsSpriteRef = useRef(null);
+  const threeGirlsRef = useRef(null);
   const maskRef = useRef(null);
   const bgMaskRef = useRef(null);
   const bgRef = useRef(null);
@@ -90,42 +97,45 @@ const ScrollScene = ({ w, h }) => {
 
     // maskRef.current.mask = girlSpriteRef.current;
     // maskRef.current.mask = bgRef.current;
-    bgRef.current.mask = bgMaskRef.current;
+    //bgRef.current.mask = bgMaskRef.current;
+
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // setTimeout(() => {
-    //   const tl = gsap.timeline({
-    //     scrollTrigger: {
-    //       // trigger: listRef.current,
-    //       // start: 'top 100%',
-    //       // markers: true,
-    //       toggleActions: 'play none none reset', // onEnter, onLeave, onEnterBack, onLeaveBack
-    //       // Options: "play", "pause", "resume", "reset", "restart", "complete", "reverse", and "none".
-    //       scrub: true
-    //     }
-    //   });
 
-    //   tl.to(
-    //     mainScrollSceneRef.current.scale,
-    //     {
-    //       x: 120,
-    //       y: 120,
-    //       duration: 1,
-    //       ease: 'power2.in'
-    //     },
-    //     'start'
-    //   ).to(
-    //     mainScrollSceneRef.current,
-    //     {
-    //       x: 600,
-    //       y: 690,
-    //       duration: 1,
-    //       ease: 'power2.out'
-    //     },
-    //     '-=1'
-    //   );
-    // }, 1500);
+    //is this to beat the race condition so that all the references are set before the timeline is made?
+    setTimeout(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          // trigger: listRef.current,
+          // start: 'top 100%',
+          // markers: true,
+          toggleActions: 'play none none reset', // onEnter, onLeave, onEnterBack, onLeaveBack
+          // Options: "play", "pause", "resume", "reset", "restart", "complete", "reverse", and "none".
+          scrub: true
+        }
+      });
+
+      tl.to(
+        subSceneRef.current.scale,
+        {
+          x: 120,
+          y: 120,
+          duration: 1,
+          ease: 'power2.in'
+        },
+        'start'
+      ).to(
+        subSceneRef.current,
+        {
+          x: 8000, //the reason this value is so high is because it is being scaled to 120,
+          y: 12000, // so to zoom in on some point x and y, you have to set the x to 120*x, 120*y
+          duration: 1,
+          ease: 'power2.in' //and it has to have the same easing curve for both so they align
+        },
+        '-=1'
+      );
+    }, 1500);
   }, []);
 
   // cloud animation
@@ -183,19 +193,37 @@ const ScrollScene = ({ w, h }) => {
       {/* <Sprite ref={bgRef} image={bg} x={0} y={0} scale={{ x: 1.5, y: 1.5 }} anchor={0.5} zIndex={0.1} /> */}
 
       <Container sortableChildren={true} ref={mainScrollSceneRef}>
-        <Container ref={subSceneRef} sortableChildren={true}>
-          <Sprite ref={bgRef} image={tbg} scale={{ x: 1, y: 1 }} anchor={0.5} zIndex={0.1} />
-          <Sprite ref={bgMaskRef} image={tmask} scale={{ x: 1, y: 1 }} anchor={0.5} zIndex={0.2} />
-          <Container ref={girlSpriteRef} sortableChildren={true}>
-            <Sprite
-              image={tgirls}
-              mask={maskRef.current}
-              scale={{ x: 1440 / 7262, y: 1440 / 7262 }}
+        <Container ref={subSceneRef} zIndex={7}>
+          {/* <Sprite ref={bgRef} image={tbg} scale={{ x: 1, y: 1 }} anchor={0.5} /> */}
+          {/* <Sprite ref={bgMaskRef} image={tmask} scale={{ x: 1, y: 1 }} anchor={0.5} /> */}
+          <Container ref={selfieGirlsSpriteRef} >
+            <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
+              image={selfieGirls}
+              
+              scale={[1440 / 7262, 1440 / 7262]}
               anchor={0.5}
               zIndex={0.5}
+              position={[-21, -80]}
             />
           </Container>
-          <Sprite ref={maskRef} image={tmask} scale={{ x: 1, y: 1 }} anchor={0.5} zIndex={0.6} />
+          <Sprite //does the z index of the mask matter?
+            ref={maskRef} image={phoneMask} scale={[1440 / 7262, 1440 / 7262]} anchor={0.5} zIndex={9} position={[-21, -80]} />
+
+          {/* <Sprite ref={maskRef} image={maskTest} scale={{ x: 1, y: 1 }} anchor={0.5} zIndex={6} /> */}
+        </Container>
+        <Container ref={subScene2Ref} zIndex={9} mask={maskRef.current}>          
+          <Container ref={threeGirlsRef} >
+            <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
+              image={threeGirlsFile}
+              
+              scale={[1440 / 2928, 1440 / 2928]}
+              anchor={0.5}
+              zIndex={0.5}
+              position={[-21, -80]}
+            />
+          </Container>
+          
+
           {/* <Sprite ref={maskRef} image={maskTest} scale={{ x: 1, y: 1 }} anchor={0.5} zIndex={6} /> */}
         </Container>
 
@@ -208,7 +236,7 @@ const ScrollScene = ({ w, h }) => {
               x={cloud.x}
               y={cloud.y}
               scale={cloud.scale}
-              zIndex={6}
+              zIndex={10}
               anchor={0}
             />
           );
