@@ -26,7 +26,20 @@ import sceneImage1Path from '../assets/testscene1.png';
 import sceneImage2Path from '../assets/testscene2.png';
 import sceneImage3Path from '../assets/testscene3.png';
 
-const sceneImageArray = [sceneImage1Path,sceneImage2Path,sceneImage3Path];
+const sceneDataArray = [
+  {
+    image: sceneImage1Path,
+    endPoint: [100, 200]
+  },
+  {
+    image: sceneImage2Path,
+    endPoint: [100, 200]
+  },
+  {
+    image: sceneImage3Path,
+    endPoint: [100, 200]
+  }
+];
 
 
 
@@ -44,13 +57,13 @@ const ScrollScene = ({ w, h }) => {
   const [curProgress, setCurProgress] = useState(0); //continuous between 0-1
   const [curPage, setCurPage] = useState(0); //integral between 0-3
   const [nextPage, setNextPage] = useState(1);
-  
+
 
   // scroll animation
   useEffect(() => {
     // cloud1SpriteRef.current.blendMode = PIXI.BLEND_MODES.MULTIPLY;
 
-    
+
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -65,18 +78,18 @@ const ScrollScene = ({ w, h }) => {
           toggleActions: 'play none none reset', // onEnter, onLeave, onEnterBack, onLeaveBack
           // Options: "play", "pause", "resume", "reset", "restart", "complete", "reverse", and "none".
           scrub: true,
-          onUpdate: ({progress,direction,isActive})=>{
-            console.log( "onUpdate:", progress, direction, isActive);
+          onUpdate: ({ progress, direction, isActive }) => {
+            console.log("onUpdate:", progress, direction, isActive);
             var tempPageProgress = progress * 4;
-            setPageProgress( tempPageProgress );
-            setCurProgress( tempPageProgress % 1);
-            var tempCurPage = Math.floor( progress*4);
-            setCurPage( tempCurPage % 3 );
-            setNextPage( ( tempCurPage+1) %3 ); //in case the cur page is 3 and the next page is 0
+            setPageProgress(tempPageProgress);
+            setCurProgress(tempPageProgress % 1);
+            var tempCurPage = Math.floor(progress * 4);
+            setCurPage(tempCurPage % 3);
+            setNextPage((tempCurPage + 1) % 3); //in case the cur page is 3 and the next page is 0
 
           }
         }
-        
+
       });
 
       // tl.to(
@@ -102,12 +115,12 @@ const ScrollScene = ({ w, h }) => {
   }, []);
 
 
-  useEffect( ()=>{
+  useEffect(() => {
 
   }, [pageProgress]);
 
 
-  
+
 
   const sceneWidth = 1440;
   const sceneHeight = 1024;
@@ -123,21 +136,19 @@ const ScrollScene = ({ w, h }) => {
       sortableChildren={true}
     >
       <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-              image={sceneImageArray[curPage]}
-              
-          
-              anchor={0.5}
-              zIndex={2}
-              scale={1+(curProgress *5)}
-            />
-        <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-          image={sceneImageArray[nextPage]}
-          
-          
-          anchor={0.5}
-          zIndex={1}
-          // position={[-21, -80]}
-        />
+        image={sceneDataArray[curPage].image}
+        anchor={0.5}
+        zIndex={2}
+        scale={1 + (curProgress * 10)}
+      />
+      <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
+        image={sceneDataArray[nextPage].image}
+
+
+        anchor={0.5}
+        zIndex={1}
+      // position={[-21, -80]}
+      />
     </Container>
   );
 };
@@ -159,9 +170,9 @@ const Size = ({ children }) => {
 
 export const App = () => {
   const scrollArea = useRef();
-  
 
-  
+
+
   return (
     <>
       <Stage
