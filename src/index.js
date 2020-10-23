@@ -14,17 +14,13 @@ let h = window.innerHeight;
 
 const sceneAspect = sceneWidth / sceneHeight;
 
-// lottie.loadAnimation({
-//   container: document.querySelector('#app'), // the dom element that will contain the animation
-//   renderer: 'html',
-//   loop: true,
-//   autoplay: true,
-//   animationData: data // the path to the animation json
-// });
+let target = '#app';
+let duration = 4;
+let speed = 'slow';
 
-const ScrollLottie = (obj) => {
+const ScrollLottie = () => {
   let anim = lottie.loadAnimation({
-    container: document.querySelector(obj.target),
+    container: document.querySelector(target),
     renderer: 'html',
     loop: false,
     autoplay: false,
@@ -38,24 +34,23 @@ const ScrollLottie = (obj) => {
       className: 'scene1bodymovin',
       id: 'scene1bodymovinId'
     },
-    onComplete: () => {
-      console.log(' this works');
-    }
+    onComplete: () => {}
   });
 
   let timeObj = { currentFrame: 0 };
   let endString =
-    obj.speed === 'slow' ? '+=2000' : obj.speed === 'medium' ? '+=1000' : obj.speed === undefined ? '+=1250' : '+=500';
+    speed === 'slow' ? '+=2000' : speed === 'medium' ? '+=1000' : speed === undefined ? '+=1250' : '+=500';
+
   ScrollTrigger.create({
-    trigger: obj.target,
+    trigger: target,
     scrub: true,
     pin: true,
     start: 'top top',
     end: endString,
     onUpdate: (self) => {
-      if (obj.duration) {
+      if (duration) {
         gsap.to(timeObj, {
-          duration: obj.duration,
+          duration: duration,
           currentFrame: Math.floor(self.progress * (anim.totalFrames - 1)),
           onUpdate: () => {
             anim.goToAndStop(timeObj.currentFrame, true);
@@ -69,43 +64,25 @@ const ScrollLottie = (obj) => {
   });
 
   anim.addEventListener('DOMLoaded', () => {
-    console.log('TEST');
     resizeAnimation();
   });
 
   window.addEventListener('resize', () => {
     anim.resize();
     resizeAnimation();
+    setTimeout(() => {
+      resizeAnimation();
+    }, 150);
   });
 };
 
 gsap.registerPlugin(ScrollTrigger);
 
-ScrollLottie({
-  target: '#app',
-  path: '',
-  duration: 4,
-  speed: 'slow'
-});
+ScrollLottie();
 
 const resizeAnimation = () => {
   let animContainer = document.querySelector('.scene1bodymovin');
-  animContainer.style.transform = `scale(${w / h > sceneAspect ? w / sceneWidth : h / sceneHeight}) translateX(-50%)`;
+  animContainer.style.transform = `scale(${
+    w / h > sceneAspect ? w / sceneWidth + 0.05 : h / sceneHeight + 0.05
+  }) translate(-50%, -50%)`;
 };
-
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-
-// import { App } from './components/App';
-
-// import * as PIXI from 'pixi.js';
-// import bunny from '../bunny.png';
-// import guy from '../sprite.png';
-// import bg from '../sprite2.png';
-
-// const canvas = document.getElementById('mycanvas');
-
-// let _w = window.innerWidth;
-// let _h = window.innerHeight;
-
-// ReactDOM.render(<App />, document.getElementById('app'));
