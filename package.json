@@ -4,19 +4,30 @@
   "description": "JavaScript example starter project",
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html --open",
+    "start": "parcel index.html",
     "build": "parcel build index.html"
   },
   "dependencies": {
     "@inlet/react-pixi": "^5.2.0",
+    "gsap": "file:external/gsap-bonus.tgz",
+    "lottie-web": "^5.7.3",
+    "pixi.bodymovin": "0.0.2",
     "pixi.js": "5.3.3",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "gsap": "file:external/gsap-bonus.tgz"
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
-    "parcel-bundler": "^1.6.1"
+    "parcel-bundler": "^1.6.1",
+    "parcel-plugin-static-files-copy": "^2.5.0"
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "public",
+        "staticOutDir": "public/"
+      }
+    ]
   },
   "keywords": [
     "javascript",

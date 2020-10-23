@@ -17,3 +17,12 @@ canvas {
   top: 0;
   left: 0;
 }
+
+#app {
+  width: 100vw;
+  height: 100vh;
+}
+
+#app > div {
+  left: 50% !important;
+}
