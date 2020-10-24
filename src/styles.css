@@ -18,9 +18,20 @@ canvas {
   left: 0;
 }
 
+#scroller {
+  /* position: fixed;
+  top: 0;
+  left: 0; */
+  width: 0;
+  height: 800vh;
+}
+
 #app {
   width: 100vw;
   height: 100vh;
+  /* position: fixed;
+  top: 0;
+  left: 0; */
 }
 
 #app > div {
