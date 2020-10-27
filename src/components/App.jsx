@@ -21,10 +21,72 @@ import phoneMask from '../assets/selfieGirlsPhoneMask.webp';
 import bg from '../assets/scene-1-bg.jpg';
 import clouds1 from '../assets/clouds-large.png';
 import selfieGirls from '../assets/Scene_SelfieGirls.png';
+import { DepthContainer } from './DepthContainer';
 
-import sceneImage1Path from '../assets/testscene1.png';
-import sceneImage2Path from '../assets/testscene2.png';
-import sceneImage3Path from '../assets/testscene3.png';
+import sceneImage1Path from '../assets/testdistance1.png';
+import sceneImage2Path from '../assets/testdistance2.png';
+import sceneImage3Path from '../assets/testdistance3.png';
+
+
+import tiaPath1 from '../assets/tia/Tia_MASTER_v3_0000.png';
+import tiaPath2 from '../assets/tia/Tia_MASTER_v3_0000s_0000.png';
+import tiaPath3 from '../assets/tia/Tia_MASTER_v3_0000s_0001.png';
+import tiaPath4 from '../assets/tia/Tia_MASTER_v3_0000s_0002.png';
+import tiaPath5 from '../assets/tia/Tia_MASTER_v3_0000s_0003.png';
+import tiaPath6 from '../assets/tia/Tia_MASTER_v3_0000s_0004.png';
+import tiaPath7 from '../assets/tia/Tia_MASTER_v3_0001.png';
+import tiaPath8 from '../assets/tia/Tia_MASTER_v3_0002.png';
+import tiaPath9 from '../assets/tia/Tia_MASTER_v3_0003.png';
+import tiaPath10 from '../assets/tia/Tia_MASTER_v3_0004.png';
+import tiaPath11 from '../assets/tia/Tia_MASTER_v3_0005.png';
+import tiaPath12 from '../assets/tia/Tia_MASTER_v3_0006.png';
+import tiaPath13 from '../assets/tia/Tia_MASTER_v3_0007.png';
+import tiaPath14 from '../assets/tia/Tia_MASTER_v3_0008.png';
+import tiaPath15 from '../assets/tia/Tia_MASTER_v3_0009.png';
+import tiaPath16 from '../assets/tia/Tia_MASTER_v3_0010.png';
+import tiaPath17 from '../assets/tia/Tia_MASTER_v3_0011.png';
+import tiaPath18 from '../assets/tia/Tia_MASTER_v3_0012.png';
+import tiaPath19 from '../assets/tia/Tia_MASTER_v3_0013.png';
+import tiaPath20 from '../assets/tia/Tia_MASTER_v3_0014.png';
+import tiaPath21 from '../assets/tia/Tia_MASTER_v3_0015.png';
+import tiaPath22 from '../assets/tia/Tia_MASTER_v3_0016.png';
+import tiaPath23 from '../assets/tia/Tia_MASTER_v3_0017.png';
+import tiaPath24 from '../assets/tia/Tia_MASTER_v3_0018.png';
+import tiaPath25 from '../assets/tia/Tia_MASTER_v3_0019.png';
+import tiaPath26 from '../assets/tia/Tia_MASTER_v3_0020.png';
+import tiaPath27 from '../assets/tia/Tia_MASTER_v3_0021.png';
+
+
+const tiaPaths = [
+  tiaPath1,
+  /*
+  tiaPath2,
+  tiaPath3,
+  tiaPath4,
+  tiaPath5,
+  tiaPath6,
+  tiaPath7,*/
+  tiaPath8,
+  tiaPath9,
+  tiaPath10,
+  tiaPath11,
+  tiaPath12,
+  tiaPath13,
+  tiaPath14,
+  tiaPath15,
+  tiaPath16,
+  tiaPath17,
+  tiaPath18,
+  tiaPath19,
+  tiaPath20,
+  tiaPath21,
+  tiaPath22,
+  tiaPath23,
+  tiaPath24,
+  tiaPath25,
+  tiaPath26,
+  tiaPath27,
+];
 
 const sceneDataArray = [
   {
@@ -57,6 +119,7 @@ const ScrollScene = ({ w, h }) => {
   const [curProgress, setCurProgress] = useState(0); //continuous between 0-1
   const [curPage, setCurPage] = useState(0); //integral between 0-3
   const [nextPage, setNextPage] = useState(1);
+  const [nextNextPage, setNextNextPage] = useState(2);
 
 
   // scroll animation
@@ -80,12 +143,13 @@ const ScrollScene = ({ w, h }) => {
           scrub: true,
           onUpdate: ({ progress, direction, isActive }) => {
             console.log("onUpdate:", progress, direction, isActive);
-            var tempPageProgress = progress * 4;
+            var tempPageProgress = progress * 2;
             setPageProgress(tempPageProgress);
             setCurProgress(tempPageProgress % 1);
-            var tempCurPage = Math.floor(progress * 4);
-            setCurPage(tempCurPage % 3);
-            setNextPage((tempCurPage + 1) % 3); //in case the cur page is 3 and the next page is 0
+            var tempCurPage = Math.floor(progress * 2);
+            setCurPage(tempCurPage % 2);
+            setNextPage((tempCurPage + 1) % 2); //in case the cur page is 3 and the next page is 0
+            setNextNextPage((tempCurPage + 2) % 2); //in case the cur page is 3 and the next page is 0
 
           }
         }
@@ -135,20 +199,50 @@ const ScrollScene = ({ w, h }) => {
       }
       sortableChildren={true}
     >
-      <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-        image={sceneDataArray[curPage].image}
-        anchor={0.5}
-        zIndex={2}
-        scale={1 + (curProgress * 10)}
-      />
-      <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-        image={sceneDataArray[nextPage].image}
 
 
-        anchor={0.5}
-        zIndex={1}
-      // position={[-21, -80]}
-      />
+
+
+      { tiaPaths.map( (item, index) => {
+        const baseDistance =  10 +index*5;
+        const camDistance = baseDistance - ( curProgress *( tiaPaths.length*5 + 10));
+        if( camDistance > 0 ){
+          return(
+          <DepthContainer key={index} baseDistance={baseDistance } distance={ camDistance} zIndex={tiaPaths.length - index}>
+           <Sprite image={item} anchor={0.5} />
+          </DepthContainer>          
+          );}
+          else{
+            return null;
+          }
+      })}
+    
+
+      {/* // <DepthContainer baseDistance={5} distance={5 - curProgress * 5} zIndex={3}>
+      //   <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
+      //     image={sceneDataArray[curPage].image}
+      //     anchor={0.5}
+
+
+
+
+      //   />
+
+      // </DepthContainer>
+      // <DepthContainer baseDistance={10} distance={10 - curProgress * 5} zIndex={2}>
+      //   <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
+      //     image={sceneDataArray[nextPage].image}
+      //     anchor={0.5}
+      //   // position={[-21, -80]}
+      //   />
+      // </DepthContainer>
+      // <DepthContainer baseDistance={20} distance={20 - curProgress * 5} zIndex={1}>
+      //   <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
+      //     image={sceneDataArray[nextNextPage].image}
+      //     anchor={0.5}
+      //   // position={[-21, -80]}
+      //   />
+      // </DepthContainer> */}
     </Container>
   );
 };
@@ -178,7 +272,7 @@ export const App = () => {
       <Stage
         {...getSize()}
         options={{
-          backgroundColor: 0xff0000,
+          backgroundColor: 0x000000,
           resizeTo: window,
           autoDensity: true,
           transparent: true
