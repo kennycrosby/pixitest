@@ -187,7 +187,7 @@ const ScrollScene = ({ w, h }) => {
 
 
   const sceneWidth = 1440;
-  const sceneHeight = 1024;
+  const sceneHeight = 1440;
 
   const sceneAspect = sceneWidth / sceneHeight;
 
