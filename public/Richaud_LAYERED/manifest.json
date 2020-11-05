@@ -1,0 +1,518 @@
+[
+    {
+        "profile": "full",
+        "images": {
+            "3": {
+                "path": "Richaud_LAYERED/full/3.webp",
+                "bbox": [
+                    2156,
+                    5529,
+                    6286,
+                    6256
+                ],
+                "name": "UFOs - back"
+            },
+            "7": {
+                "path": "Richaud_LAYERED/full/7.webp",
+                "bbox": [
+                    6157,
+                    3115,
+                    6627,
+                    3715
+                ],
+                "name": "Laptop"
+            },
+            "8": {
+                "path": "Richaud_LAYERED/full/8.webp",
+                "bbox": [
+                    5797,
+                    3370,
+                    6661,
+                    5035
+                ],
+                "name": "Bread \u2013 flying"
+            },
+            "4": {
+                "path": "Richaud_LAYERED/full/4.webp",
+                "bbox": [
+                    1395,
+                    5061,
+                    4594,
+                    6417
+                ],
+                "name": "UFOs - front"
+            },
+            "5": {
+                "path": "Richaud_LAYERED/full/5.webp",
+                "bbox": [
+                    0,
+                    4890,
+                    8268,
+                    6652
+                ],
+                "name": "City"
+            },
+            "9": {
+                "path": "Richaud_LAYERED/full/9.webp",
+                "bbox": [
+                    1877,
+                    1516,
+                    6445,
+                    5698
+                ],
+                "name": "Levels 1"
+            },
+            "10": {
+                "path": "Richaud_LAYERED/full/10.webp",
+                "bbox": [
+                    0,
+                    4943,
+                    3347,
+                    8268
+                ],
+                "name": "Cloud 2"
+            },
+            "0": {
+                "path": "Richaud_LAYERED/full/0.webp",
+                "bbox": [
+                    0,
+                    0,
+                    8268,
+                    8268
+                ],
+                "name": "Sky"
+            },
+            "6": {
+                "path": "Richaud_LAYERED/full/6.webp",
+                "bbox": [
+                    2521,
+                    949,
+                    7158,
+                    5698
+                ],
+                "name": "Glow"
+            },
+            "11": {
+                "path": "Richaud_LAYERED/full/11.webp",
+                "bbox": [
+                    2039,
+                    3001,
+                    8268,
+                    8268
+                ],
+                "name": "Cloud 1"
+            },
+            "2": {
+                "path": "Richaud_LAYERED/full/2.webp",
+                "bbox": [
+                    0,
+                    6082,
+                    8268,
+                    8268
+                ],
+                "name": "Water"
+            },
+            "1": {
+                "path": "Richaud_LAYERED/full/1.webp",
+                "bbox": [
+                    0,
+                    0,
+                    8268,
+                    7901
+                ],
+                "name": "Clouds - Background"
+            }
+        },
+        "size": [
+            8268,
+            8268
+        ]
+    },
+    {
+        "profile": "half",
+        "images": {
+            "7": {
+                "path": "Richaud_LAYERED/half/7.webp",
+                "bbox": [
+                    3078,
+                    1557,
+                    3313,
+                    1857
+                ],
+                "name": "Laptop"
+            },
+            "3": {
+                "path": "Richaud_LAYERED/half/3.webp",
+                "bbox": [
+                    1078,
+                    2764,
+                    3143,
+                    3128
+                ],
+                "name": "UFOs - back"
+            },
+            "8": {
+                "path": "Richaud_LAYERED/half/8.webp",
+                "bbox": [
+                    2898,
+                    1685,
+                    3330,
+                    2517
+                ],
+                "name": "Bread \u2013 flying"
+            },
+            "4": {
+                "path": "Richaud_LAYERED/half/4.webp",
+                "bbox": [
+                    697,
+                    2530,
+                    2297,
+                    3208
+                ],
+                "name": "UFOs - front"
+            },
+            "5": {
+                "path": "Richaud_LAYERED/half/5.webp",
+                "bbox": [
+                    0,
+                    2445,
+                    4134,
+                    3326
+                ],
+                "name": "City"
+            },
+            "10": {
+                "path": "Richaud_LAYERED/half/10.webp",
+                "bbox": [
+                    0,
+                    2471,
+                    1673,
+                    4134
+                ],
+                "name": "Cloud 2"
+            },
+            "9": {
+                "path": "Richaud_LAYERED/half/9.webp",
+                "bbox": [
+                    938,
+                    758,
+                    3222,
+                    2849
+                ],
+                "name": "Levels 1"
+            },
+            "6": {
+                "path": "Richaud_LAYERED/half/6.webp",
+                "bbox": [
+                    1260,
+                    474,
+                    3579,
+                    2849
+                ],
+                "name": "Glow"
+            },
+            "11": {
+                "path": "Richaud_LAYERED/half/11.webp",
+                "bbox": [
+                    1019,
+                    1500,
+                    4134,
+                    4134
+                ],
+                "name": "Cloud 1"
+            },
+            "0": {
+                "path": "Richaud_LAYERED/half/0.webp",
+                "bbox": [
+                    0,
+                    0,
+                    4134,
+                    4134
+                ],
+                "name": "Sky"
+            },
+            "2": {
+                "path": "Richaud_LAYERED/half/2.webp",
+                "bbox": [
+                    0,
+                    3041,
+                    4134,
+                    4134
+                ],
+                "name": "Water"
+            },
+            "1": {
+                "path": "Richaud_LAYERED/half/1.webp",
+                "bbox": [
+                    0,
+                    0,
+                    4134,
+                    3950
+                ],
+                "name": "Clouds - Background"
+            }
+        },
+        "size": [
+            4134,
+            4134
+        ]
+    },
+    {
+        "profile": "quarter",
+        "images": {
+            "7": {
+                "path": "Richaud_LAYERED/quarter/7.png",
+                "bbox": [
+                    1539,
+                    778,
+                    1656,
+                    928
+                ],
+                "name": "Laptop"
+            },
+            "3": {
+                "path": "Richaud_LAYERED/quarter/3.png",
+                "bbox": [
+                    539,
+                    1382,
+                    1571,
+                    1564
+                ],
+                "name": "UFOs - back"
+            },
+            "8": {
+                "path": "Richaud_LAYERED/quarter/8.png",
+                "bbox": [
+                    1449,
+                    842,
+                    1665,
+                    1258
+                ],
+                "name": "Bread \u2013 flying"
+            },
+            "4": {
+                "path": "Richaud_LAYERED/quarter/4.png",
+                "bbox": [
+                    348,
+                    1265,
+                    1148,
+                    1604
+                ],
+                "name": "UFOs - front"
+            },
+            "5": {
+                "path": "Richaud_LAYERED/quarter/5.png",
+                "bbox": [
+                    0,
+                    1222,
+                    2067,
+                    1663
+                ],
+                "name": "City"
+            },
+            "10": {
+                "path": "Richaud_LAYERED/quarter/10.png",
+                "bbox": [
+                    0,
+                    1235,
+                    836,
+                    2067
+                ],
+                "name": "Cloud 2"
+            },
+            "9": {
+                "path": "Richaud_LAYERED/quarter/9.png",
+                "bbox": [
+                    469,
+                    379,
+                    1611,
+                    1424
+                ],
+                "name": "Levels 1"
+            },
+            "6": {
+                "path": "Richaud_LAYERED/quarter/6.png",
+                "bbox": [
+                    630,
+                    237,
+                    1789,
+                    1424
+                ],
+                "name": "Glow"
+            },
+            "11": {
+                "path": "Richaud_LAYERED/quarter/11.png",
+                "bbox": [
+                    509,
+                    750,
+                    2067,
+                    2067
+                ],
+                "name": "Cloud 1"
+            },
+            "0": {
+                "path": "Richaud_LAYERED/quarter/0.png",
+                "bbox": [
+                    0,
+                    0,
+                    2067,
+                    2067
+                ],
+                "name": "Sky"
+            },
+            "2": {
+                "path": "Richaud_LAYERED/quarter/2.png",
+                "bbox": [
+                    0,
+                    1520,
+                    2067,
+                    2067
+                ],
+                "name": "Water"
+            },
+            "1": {
+                "path": "Richaud_LAYERED/quarter/1.png",
+                "bbox": [
+                    0,
+                    0,
+                    2067,
+                    1975
+                ],
+                "name": "Clouds - Background"
+            }
+        },
+        "size": [
+            2067,
+            2067
+        ]
+    },
+    {
+        "profile": "mobile",
+        "images": {
+            "7": {
+                "path": "Richaud_LAYERED/mobile/7.png",
+                "bbox": [
+                    615,
+                    311,
+                    662,
+                    371
+                ],
+                "name": "Laptop"
+            },
+            "8": {
+                "path": "Richaud_LAYERED/mobile/8.png",
+                "bbox": [
+                    579,
+                    337,
+                    666,
+                    503
+                ],
+                "name": "Bread \u2013 flying"
+            },
+            "3": {
+                "path": "Richaud_LAYERED/mobile/3.png",
+                "bbox": [
+                    215,
+                    552,
+                    628,
+                    625
+                ],
+                "name": "UFOs - back"
+            },
+            "4": {
+                "path": "Richaud_LAYERED/mobile/4.png",
+                "bbox": [
+                    139,
+                    506,
+                    459,
+                    641
+                ],
+                "name": "UFOs - front"
+            },
+            "5": {
+                "path": "Richaud_LAYERED/mobile/5.png",
+                "bbox": [
+                    0,
+                    489,
+                    826,
+                    665
+                ],
+                "name": "City"
+            },
+            "10": {
+                "path": "Richaud_LAYERED/mobile/10.png",
+                "bbox": [
+                    0,
+                    494,
+                    334,
+                    826
+                ],
+                "name": "Cloud 2"
+            },
+            "9": {
+                "path": "Richaud_LAYERED/mobile/9.png",
+                "bbox": [
+                    187,
+                    151,
+                    644,
+                    569
+                ],
+                "name": "Levels 1"
+            },
+            "6": {
+                "path": "Richaud_LAYERED/mobile/6.png",
+                "bbox": [
+                    252,
+                    94,
+                    715,
+                    569
+                ],
+                "name": "Glow"
+            },
+            "11": {
+                "path": "Richaud_LAYERED/mobile/11.png",
+                "bbox": [
+                    203,
+                    300,
+                    826,
+                    826
+                ],
+                "name": "Cloud 1"
+            },
+            "2": {
+                "path": "Richaud_LAYERED/mobile/2.png",
+                "bbox": [
+                    0,
+                    608,
+                    826,
+                    826
+                ],
+                "name": "Water"
+            },
+            "0": {
+                "path": "Richaud_LAYERED/mobile/0.png",
+                "bbox": [
+                    0,
+                    0,
+                    826,
+                    826
+                ],
+                "name": "Sky"
+            },
+            "1": {
+                "path": "Richaud_LAYERED/mobile/1.png",
+                "bbox": [
+                    0,
+                    0,
+                    826,
+                    790
+                ],
+                "name": "Clouds - Background"
+            }
+        },
+        "size": [
+            826,
+            826
+        ]
+    }
+]
