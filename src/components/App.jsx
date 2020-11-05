@@ -22,12 +22,14 @@ import bg from '../assets/scene-1-bg.jpg';
 import clouds1 from '../assets/clouds-large.png';
 import selfieGirls from '../assets/Scene_SelfieGirls.png';
 import { DepthContainer } from './DepthContainer';
-
-import sceneImage1Path from '../assets/testdistance1.png';
-import sceneImage2Path from '../assets/testdistance2.png';
-import sceneImage3Path from '../assets/testdistance3.png';
+import { ZoomScene } from './ZoomScene';
 
 
+// import sceneImage1Path from '../assets/testdistance1.png';
+// import sceneImage2Path from '../assets/testdistance2.png';
+// import sceneImage3Path from '../assets/testdistance3.png';
+
+const tiatest = '../assets/tia/Tia_MASTER_v3_0000.png';
 import tiaPath1 from '../assets/tia/Tia_MASTER_v3_0000.png';
 import tiaPath2 from '../assets/tia/Tia_MASTER_v3_0000s_0000.png';
 import tiaPath3 from '../assets/tia/Tia_MASTER_v3_0000s_0001.png';
@@ -55,6 +57,26 @@ import tiaPath24 from '../assets/tia/Tia_MASTER_v3_0018.png';
 import tiaPath25 from '../assets/tia/Tia_MASTER_v3_0019.png';
 import tiaPath26 from '../assets/tia/Tia_MASTER_v3_0020.png';
 import tiaPath27 from '../assets/tia/Tia_MASTER_v3_0021.png';
+
+
+import richaudManifest from '../assets/Richaud_LAYERED/manifest.json';
+var quarterManifest = richaudManifest.filter((x) => x.profile === "quarter")[0]
+//quartermanifest now is {profile:'quarter', images:{'0':{}, '1':{} }} etc
+console.log(quarterManifest)
+
+//convert a numerical key dictionary to an array
+quarterManifest['images'] = Object.values( quarterManifest['images']);
+
+quarterManifest['images'].map( (imageData, index) =>{
+  console.log("map manifest", imageData.path);
+  const imagePath = imageData.path;
+  import(`../assets/${imagePath}`).then(image => {
+    console.log("image:", image);
+    imageData.path = image;
+  }).catch( e=>{
+    console.log( "error:", e);
+  });
+});
 
 
 const tiaPaths = [
@@ -87,21 +109,21 @@ const tiaPaths = [
   tiaPath26,
   tiaPath27,
 ];
-
-const sceneDataArray = [
-  {
-    image: sceneImage1Path,
-    endPoint: [100, 200]
-  },
-  {
-    image: sceneImage2Path,
-    endPoint: [100, 200]
-  },
-  {
-    image: sceneImage3Path,
-    endPoint: [100, 200]
-  }
-];
+console.log( "tiapath1:", tiaPath1);
+// const sceneDataArray = [
+//   {
+//     image: sceneImage1Path,
+//     endPoint: [100, 200]
+//   },
+//   {
+//     image: sceneImage2Path,
+//     endPoint: [100, 200]
+//   },
+//   {
+//     image: sceneImage3Path,
+//     endPoint: [100, 200]
+//   }
+// ];
 
 
 
@@ -150,6 +172,8 @@ const ScrollScene = ({ w, h }) => {
             setCurPage(tempCurPage % 2);
             setNextPage((tempCurPage + 1) % 2); //in case the cur page is 3 and the next page is 0
             setNextNextPage((tempCurPage + 2) % 2); //in case the cur page is 3 and the next page is 0
+            // if curProgress < .3 then outProgress = 0;
+            // if curProgress >=.3 then outProgress = .7*curProgress-.3;
 
           }
         }
@@ -201,48 +225,24 @@ const ScrollScene = ({ w, h }) => {
     >
 
 
-
-
-      { tiaPaths.map( (item, index) => {
-        const baseDistance =  10 +index*5;
-        const camDistance = baseDistance - ( curProgress *( tiaPaths.length*5 + 10));
-        if( camDistance > 0 ){
-          return(
-          <DepthContainer key={index} baseDistance={baseDistance } distance={ camDistance} zIndex={tiaPaths.length - index}>
-           <Sprite image={item} anchor={0.5} />
-          </DepthContainer>          
-          );}
-          else{
-            return null;
-          }
+      <ZoomScene id={'richaud'} manifestData={quarterManifest} closestDistance={10} layerDistanceDelta={5} curProgress={curProgress}/>
+      {/* <Container sortableChildren={true}>
+      { tiaPaths.map((item, index) => {
+        const baseDistance = 10 + index * 5;
+        const camDistance = baseDistance - (curProgress * (tiaPaths.length * 5 + 10));
+        if (camDistance > 0) {
+          return (
+            <DepthContainer key={index} baseDistance={baseDistance} distance={camDistance} zIndex={tiaPaths.length - index}>
+              <Sprite image={item} anchor={0.5} />
+            </DepthContainer>
+          );
+        }
+        else {
+          return null;
+        }
       })}
-    
+      </Container> */}
 
-      {/* // <DepthContainer baseDistance={5} distance={5 - curProgress * 5} zIndex={3}>
-      //   <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-      //     image={sceneDataArray[curPage].image}
-      //     anchor={0.5}
-
-
-
-
-      //   />
-
-      // </DepthContainer>
-      // <DepthContainer baseDistance={10} distance={10 - curProgress * 5} zIndex={2}>
-      //   <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-      //     image={sceneDataArray[nextPage].image}
-      //     anchor={0.5}
-      //   // position={[-21, -80]}
-      //   />
-      // </DepthContainer>
-      // <DepthContainer baseDistance={20} distance={20 - curProgress * 5} zIndex={1}>
-      //   <Sprite //can be swapped out with the normal sprite at normal scale if they use a non-webp capable browser  
-      //     image={sceneDataArray[nextNextPage].image}
-      //     anchor={0.5}
-      //   // position={[-21, -80]}
-      //   />
-      // </DepthContainer> */}
     </Container>
   );
 };
