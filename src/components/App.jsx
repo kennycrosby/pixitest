@@ -59,7 +59,7 @@ import tiaPath26 from '../assets/tia/Tia_MASTER_v3_0020.png';
 import tiaPath27 from '../assets/tia/Tia_MASTER_v3_0021.png';
 
 
-import richaudManifest from '../../public/Richaud_LAYERED/manifest.json';
+import richaudManifest from '../../public/Rose-Greenberg-RASTERIZED/manifest.json';
 var quarterManifest = richaudManifest.filter((x) => x.profile === "quarter")[0]
 //quartermanifest now is {profile:'quarter', images:{'0':{}, '1':{} }} etc
 console.log(quarterManifest)

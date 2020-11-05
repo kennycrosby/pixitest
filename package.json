@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "@inlet/react-pixi": "^5.2.0",
+    "gsap": "file:external/gsap-bonus.tgz",
+    "parcel": "^1.12.4",
     "pixi.js": "5.3.3",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "gsap": "file:external/gsap-bonus.tgz"
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
