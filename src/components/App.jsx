@@ -59,7 +59,7 @@ import tiaPath26 from '../assets/tia/Tia_MASTER_v3_0020.png';
 import tiaPath27 from '../assets/tia/Tia_MASTER_v3_0021.png';
 
 
-import richaudManifest from '../assets/Richaud_LAYERED/manifest.json';
+import richaudManifest from '../../public/Richaud_LAYERED/manifest.json';
 var quarterManifest = richaudManifest.filter((x) => x.profile === "quarter")[0]
 //quartermanifest now is {profile:'quarter', images:{'0':{}, '1':{} }} etc
 console.log(quarterManifest)
@@ -67,16 +67,18 @@ console.log(quarterManifest)
 //convert a numerical key dictionary to an array
 quarterManifest['images'] = Object.values( quarterManifest['images']);
 
-quarterManifest['images'].map( (imageData, index) =>{
-  console.log("map manifest", imageData.path);
-  const imagePath = imageData.path;
-  import(`../assets/${imagePath}`).then(image => {
-    console.log("image:", image);
-    imageData.path = image;
-  }).catch( e=>{
-    console.log( "error:", e);
-  });
-});
+// quarterManifest['images'].map( (imageData, index) =>{
+//   console.log("map manifest", imageData.path);
+//   const imagePath = imageData.path;
+  
+  
+//   require(`../assets/${imagePath}`).then(image => {
+//     console.log("image:", image);
+//     imageData.path = image.default;
+//   }).catch( e=>{
+//     console.log( "error:", e);
+//   });
+// });
 
 
 const tiaPaths = [

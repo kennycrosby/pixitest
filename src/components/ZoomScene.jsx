@@ -15,7 +15,7 @@ export const ZoomScene = ({ id, manifestData, closestDistance, layerDistanceDelt
             {images.map((imageData, index) => {
                 const baseDistance = closestDistance + index * layerDistanceDelta;
                 const camDistance = baseDistance - (curProgress * (images.length * layerDistanceDelta + closestDistance));
-                const imagePath = "../assets/"+imageData.path;
+                const imagePath = "/public/"+imageData.path;
                 console.log( "imagePath:", imagePath);
                 if (camDistance > 0) {
                     return (
