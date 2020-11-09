@@ -16,11 +16,13 @@ export const ZoomScene = ({ id, manifestData, closestDistance, layerDistanceDelt
                 const baseDistance = closestDistance + (images.length-index) * layerDistanceDelta;
                 const camDistance = baseDistance - (curProgress * (images.length * layerDistanceDelta + closestDistance));
                 const imagePath = "/public/"+imageData.path;
+                const yDrop= camDistance != 0 ? 1/camDistance*1000: -100;
                 console.log( "imagePath:", imagePath);
                 if (camDistance > 0) {
                     return (
                         <DepthContainer key={index} baseDistance={baseDistance} distance={camDistance} zIndex={ index}>
-                            <Sprite image={imagePath} anchor={0} position={[offset[0] + imageData.bbox[0], offset[1] + imageData.bbox[1]]} />
+                            <Sprite image={imagePath} anchor={0} position={[offset[0] + imageData.bbox[0], offset[1] + imageData.bbox[1] + yDrop]} />
+                        
                         </DepthContainer>
                     );
                 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState, createRef, useRef, useReducer } from 'react
 import { Stage, Sprite, Text, Container, useTick } from '@inlet/react-pixi';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
+import VirtualScroll, {virtualScroll} from 'virtual-scroll';
 
 import * as PIXI from 'pixi.js';
 
@@ -134,6 +135,8 @@ const reducer = (_, { data }) => data;
 
 window.PIXI = PIXI;
 
+// const vs = new VirtualScroll();
+// vs.on( onScroll )
 
 const ScrollScene = ({ w, h }) => {
   const subSceneRef = useRef(null);

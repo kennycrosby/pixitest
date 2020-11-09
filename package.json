@@ -13,7 +13,8 @@
     "parcel": "^1.12.4",
     "pixi.js": "5.3.3",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "virtual-scroll": "^1.5.2"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
