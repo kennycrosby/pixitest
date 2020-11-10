@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App } from './components/App';
+import { R3Fapp } from './components/R3Fapp';
 
 // import * as PIXI from 'pixi.js';
 // import bunny from '../bunny.png';
@@ -15,4 +16,5 @@ import { App } from './components/App';
 // let _w = window.innerWidth;
 // let _h = window.innerHeight;
 
-ReactDOM.render(<App />, document.getElementById('app'));
+//ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<R3Fapp />, document.getElementById('app'));
